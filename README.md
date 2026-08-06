@@ -1,4 +1,4 @@
-# Placement Timeline
+# Timeline Tracker
 
 A minimal, dark-themed tracker for placement drives. Each company/process is a
 glowing vertical timeline (git-graph style); every important date becomes a
