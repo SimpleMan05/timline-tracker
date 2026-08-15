@@ -37,14 +37,20 @@ router.post("/", async (req, res) => {
 
 // PATCH /api/timelines/:id — rename a timeline { name }
 router.patch("/:id", async (req, res) => {
-  const { name } = req.body;
-  if (!name?.trim()) return res.status(400).json({ error: "name is required" });
+  const { name, isActive } = req.body;
+  const update = {};
 
-  const timeline = await Timeline.findByIdAndUpdate(
-    req.params.id,
-    { name: name.trim() },
-    { new: true }
-  );
+  if (name !== undefined) {
+    if (!name.trim()) return res.status(400).json({ error: "name cannot be empty" });
+    update.name = name.trim();
+  }
+  if (isActive !== undefined) update.isActive = !!isActive;
+
+  if (Object.keys(update).length === 0) {
+    return res.status(400).json({ error: "nothing to update" });
+  }
+
+  const timeline = await Timeline.findByIdAndUpdate(req.params.id, update, { new: true });
   if (!timeline) return res.status(404).json({ error: "timeline not found" });
   res.json(timeline);
 });

@@ -70,16 +70,14 @@ export default function App() {
         isOpen={sidebarOpen}
         onRequestClose={() => setSidebarOpen(false)}
         timelines={timelines}
-        onAddTimeline={() => {
-          setShowAddTimeline(true);
-          setSidebarOpen(false);
-        }}
-        onAddNode={(t) => {
-          setAddingNodeTo(t);
-          setSidebarOpen(false);
-        }}
+        onAddTimeline={() => { setShowAddTimeline(true); setSidebarOpen(false); }}
+        onAddNode={(t) => { setAddingNodeTo(t); setSidebarOpen(false); }}
         onRename={(t) => setRenamingTimeline(t)}
         onDelete={handleDeleteTimeline}
+        onToggleActive={async (t) => {
+          await api.setTimelineActive(t._id, !(t.isActive !== false));
+          refresh();
+        }}
       />
       <TimelineGraph timelines={timelines} onRefresh={refresh} />
 

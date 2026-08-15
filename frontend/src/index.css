@@ -159,6 +159,13 @@ button {
   opacity: 1;
 }
 
+.timeline-row--inactive {
+  opacity: 0.5;
+}
+.timeline-row--inactive .timeline-row__name {
+  color: var(--text-muted);
+}
+
 .icon-btn {
   background: transparent;
   border: 1px solid var(--border);

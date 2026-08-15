@@ -18,27 +18,33 @@ function combinedTimestamp(dateStr, timeStr) {
   return d.getTime();
 }
 
+
+
 export default function TimelineGraph({ timelines, onRefresh }) {
   const todayRef = useRef(null);
   const [activeNode, setActiveNode] = useState(null);
   const [editingNode, setEditingNode] = useState(null);
 
   const layout = useMemo(() => {
+    const INACTIVE_COLOR = "#5a5a66";
+
     const lanes = timelines.map((t, i) => ({
       id: t._id,
       name: t.name,
-      color: t.color,
+      color: t.isActive === false ? INACTIVE_COLOR : t.color,
+      isActive: t.isActive !== false,
       x: LANE_START_X + i * LANE_GAP,
     }));
 
     const entries = [];
     timelines.forEach((t) => {
+      const laneColor = t.isActive === false ? INACTIVE_COLOR : t.color;
       t.nodes.forEach((n) => {
         entries.push({
           kind: "node",
           timelineId: t._id,
           timelineName: t.name,
-          color: t.color,
+          color: laneColor,
           ...n,
           ts: combinedTimestamp(n.date, n.time),
         });

@@ -17,6 +17,7 @@ const TimelineSchema = new Schema(
   {
     name: { type: String, required: true, trim: true },
     color: { type: String, required: true }, // hex neon accent
+    isActive: { type: Boolean, default: true },
     nodes: { type: [NodeSchema], default: [] },
   },
   { timestamps: true }
