@@ -29,4 +29,6 @@ export const api = {
     }),
   deleteNode: (timelineId, nodeId) =>
     request(`/timelines/${timelineId}/nodes/${nodeId}`, { method: "DELETE" }),
+  setTimelineActive: (id, isActive) =>
+    request(`/timelines/${id}`, { method: "PATCH", body: JSON.stringify({ isActive }) }),
 };
